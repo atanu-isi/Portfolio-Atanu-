@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Atanu Das — Turning Risk into Insight</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ink:#0F1829;
+  --ink2:#1E2D45;
+  --muted:#6B7A99;
+  --muted2:#8C9AB8;
+  --bg:#F5F7FC;
+  --bg2:#FFFFFF;
+  --bg3:#EBF0FA;
+  --sidebar-bg:#0F1829;
+  --sidebar-text:rgba(255,255,255,0.6);
+  --sidebar-active:#fff;
+  --sidebar-w:260px;
+  --accent:#2563EB;
+  --accent-lt:#EBF2FF;
+  --accent-mid:rgba(37,99,235,0.12);
+  --accent2:#0EA5E9;
+  --accent3:#6366F1;
+  --gold:#C9A84C;
+  --gold-lt:#FBF6E9;
+  --green:#059669;
+  --border:rgba(37,99,235,0.1);
+  --border2:rgba(15,24,41,0.08);
+  --shadow:0 2px 20px rgba(15,24,41,0.06);
+  --shadow-lg:0 12px 48px rgba(15,24,41,0.12);
+  --radius:12px;
+  --radius-sm:7px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;display:flex}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg3)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px}
+a{text-decoration:none;color:inherit}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;
+  width:var(--sidebar-w);
+  background:var(--sidebar-bg);
+  display:flex;flex-direction:column;
+  padding:0;
+  z-index:300;
+  overflow-y:auto;
+  overflow-x:hidden;
+  box-shadow:4px 0 24px rgba(0,0,0,0.15);
+}
+
+/* sidebar name block — tall, typographic statement */
+.sidebar-brand{
+  padding:2.4rem 1.8rem 2rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.brand-line-top{
+  font-family:'Outfit',sans-serif;
+  font-size:.6rem;font-weight:600;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+  margin-bottom:.9rem;
+}
+.brand-name-first{
+  font-family:'Playfair Display',serif;
+  font-size:1.9rem;font-weight:700;
+  color:#fff;
+  line-height:1;
+  letter-spacing:-.01em;
+  display:block;
+  margin-bottom:.18rem;
+}
+.brand-name-last{
+  font-family:'Playfair Display',serif;
+  font-size:1.9rem;font-weight:900;
+  line-height:1;
+  letter-spacing:-.01em;
+  display:block;
+  background:linear-gradient(120deg,#60A5FA 0%,#38BDF8 60%,#818CF8 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:1rem;
+}
+.brand-divider{
+  width:32px;height:2px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+  border-radius:2px;margin-bottom:.9rem;
+}
+.brand-tagline{
+  font-size:.72rem;font-weight:500;
+  color:rgba(255,255,255,0.4);
+  letter-spacing:.04em;
+  line-height:1.6;
+}
+.brand-tagline strong{
+  color:rgba(255,255,255,0.65);font-weight:600;
+}
+
+.nav-section{
+  padding:.3rem 1rem;
+  margin-bottom:.2rem;
+}
+.nav-section-title{
+  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,0.2);font-weight:700;
+  padding:.8rem .8rem .5rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.6rem .8rem;border-radius:8px;
+  cursor:pointer;transition:all .18s;
+  color:var(--sidebar-text);font-size:.8rem;font-weight:500;
+  position:relative;
+  border:1px solid transparent;
+  margin-bottom:1px;
+}
+.nav-item:hover{
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+}
+.nav-item.active{
+  background:rgba(37,99,235,0.18);
+  color:#fff;
+  border-color:rgba(37,99,235,0.25);
+}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:2px;height:55%;background:var(--accent2);border-radius:0 2px 2px 0;
+}
+.nav-icon{font-size:.88rem;width:18px;text-align:center;flex-shrink:0}
+
+.nav-sub{overflow:hidden;max-height:0;transition:max-height .3s ease}
+.nav-sub.open{max-height:400px}
+.nav-sub-item{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.42rem .8rem .42rem 2.7rem;
+  border-radius:6px;cursor:pointer;
+  color:rgba(255,255,255,0.35);font-size:.75rem;
+  transition:all .15s;margin:1px 0;
+}
+.nav-sub-item:hover{color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.04)}
+.nav-sub-item.active{color:#93C5FD}
+.nav-toggle{margin-left:auto;font-size:.55rem;transition:transform .25s;color:rgba(255,255,255,0.25)}
+.nav-item.open .nav-toggle{transform:rotate(90deg)}
+
+.sidebar-footer{
+  margin-top:auto;padding:1.4rem 1.8rem;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.sidebar-social{display:flex;gap:.5rem;margin-top:.7rem}
+.sidebar-social a{
+  width:32px;height:32px;border-radius:7px;
+  background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;color:rgba(255,255,255,0.45);
+  transition:all .2s;font-weight:700;
+}
+.sidebar-social a:hover{background:var(--accent);color:#fff}
+
+/* ── MAIN CONTENT ── */
+.main-wrap{margin-left:var(--sidebar-w);flex:1;min-width:0}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  background:linear-gradient(155deg,#F8FAFF 0%,#EEF3FD 40%,#F0F5FF 70%,#EAF0FF 100%);
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg-dots{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(37,99,235,0.07) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+}
+.hero-bg-shape1{
+  position:absolute;top:-80px;right:-80px;
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(37,99,235,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-bg-shape2{
+  position:absolute;bottom:-100px;left:0;
+  width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* decorative vertical lines */
+.hero-lines{
+  position:absolute;top:0;right:360px;bottom:0;
+  width:1px;
+  background:linear-gradient(180deg,transparent,rgba(37,99,235,0.12) 30%,rgba(37,99,235,0.12) 70%,transparent);
+  pointer-events:none;
+}
+
+.hero-content{
+  max-width:1060px;width:100%;padding:5rem 4rem;
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 320px;
+  gap:4rem;align-items:center;
+}
+
+/* left hero text */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(37,99,235,0.07);
+  border:1px solid rgba(37,99,235,0.18);
+  border-radius:40px;padding:.32rem .9rem;
+  margin-bottom:2rem;
+}
+.hero-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);animation:pulse 2s infinite;
+}
+.hero-eyebrow-text{
+  font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+.hero-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.6rem,4.5vw,4rem);
+  font-weight:900;color:var(--ink);
+  line-height:1.12;letter-spacing:-.02em;
+  margin-bottom:.6rem;
+}
+.hero-headline .accent-word{
+  color:var(--accent);
+  position:relative;
+}
+.hero-headline .accent-word::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;
+  height:2px;background:var(--accent);border-radius:2px;opacity:.4;
+}
+
+.hero-sub-tagline{
+  font-family:'Outfit',sans-serif;
+  font-size:1rem;font-weight:600;
+  color:var(--muted);letter-spacing:.04em;
+  margin-bottom:1.4rem;
+}
+.hero-sub-tagline span{color:var(--gold);font-weight:700}
+
+.hero-role-line{
+  font-size:.88rem;color:var(--muted);
+  font-weight:400;margin-bottom:.4rem;line-height:1.6;
+}
+.hero-role-line strong{color:var(--ink);font-weight:600}
+
+.hero-desc{
+  font-size:.88rem;color:var(--muted);
+  max-width:480px;line-height:1.95;margin-bottom:2.2rem;
+  margin-top:1rem;
+}
+.hero-desc strong{color:var(--ink2);font-weight:600}
+
+.hero-pills{
+  display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem;
+}
+.hero-pill{
+  font-size:.65rem;font-weight:600;letter-spacing:.06em;
+  padding:.28rem .72rem;border-radius:40px;
+  background:#fff;color:var(--ink2);
+  border:1px solid var(--border2);
+  box-shadow:0 1px 4px rgba(0,0,0,0.05);
+}
+.hero-pill.highlighted{
+  background:var(--accent-lt);color:var(--accent);
+  border-color:rgba(37,99,235,0.2);
+}
+
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.6rem 1.4rem;border-radius:var(--radius-sm);
+  font-size:.78rem;font-family:'Outfit',sans-serif;
+  font-weight:600;letter-spacing:.02em;
+  transition:all .2s;cursor:pointer;border:none;
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#1D4ED8;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,0.3)}
+.btn-outline{background:#fff;color:var(--ink2);border:1.5px solid var(--border2)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#B8933E;transform:translateY(-1px)}
+
+/* hero photo */
+.hero-photo-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-photo-outer{
+  position:relative;
+  width:300px;height:300px;
+}
+.hero-photo-ring1{
+  position:absolute;inset:-14px;border-radius:50%;
+  border:1px solid rgba(37,99,235,0.15);
+  animation:slowspin 30s linear infinite;
+}
+.hero-photo-ring1::before{
+  content:'';position:absolute;top:6px;left:50%;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);
+  transform:translateX(-50%);
+}
+.hero-photo-ring2{
+  position:absolute;inset:-28px;border-radius:50%;
+  border:1px dashed rgba(37,99,235,0.08);
+  animation:slowspin 50s linear infinite reverse;
+}
+@keyframes slowspin{to{transform:rotate(360deg)}}
+.hero-photo-frame{
+  width:300px;height:300px;border-radius:50%;overflow:hidden;
+  background:var(--bg3);
+  border:3px solid #fff;
+  box-shadow:0 8px 40px rgba(37,99,235,0.15),0 2px 8px rgba(0,0,0,0.08);
+  position:relative;
+}
+.hero-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.hero-photo-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;color:var(--muted2);cursor:pointer;
+}
+.hero-photo-placeholder span{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.photo-upload-btn{
+  position:absolute;bottom:8px;right:8px;
+  background:var(--accent);color:#fff;
+  border:3px solid #fff;cursor:pointer;
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-lg);
+  transition:all .2s;font-size:.85rem;
+}
+.photo-upload-btn:hover{background:var(--accent3);transform:scale(1.08)}
+
+/* credential tag on photo */
+.photo-credential{
+  position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+  background:#fff;border:1px solid var(--border2);
+  border-radius:40px;padding:.4rem 1rem;
+  display:flex;align-items:center;gap:.5rem;
+  box-shadow:var(--shadow);white-space:nowrap;
+}
+.photo-credential-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;
+}
+.photo-credential-text{font-size:.68rem;font-weight:700;color:var(--ink);letter-spacing:.02em}
+
+/* ── CONTAINER ── */
+.container{max-width:960px;margin:0 auto;padding:0 3rem}
+
+/* ── SECTIONS ── */
+section{padding:96px 0 72px}
+section:nth-child(even){background:var(--bg2)}
+section:nth-child(odd){background:var(--bg)}
+
+/* section headers */
+.sec-eyebrow{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:.5rem;
+}
+.sec-eyebrow::before{content:'';width:18px;height:1.5px;background:var(--accent);border-radius:2px}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,3vw,2.4rem);
+  font-weight:700;color:var(--ink);
+  margin-bottom:.5rem;line-height:1.15;letter-spacing:-.02em;
+}
+.sec-sub{font-size:.88rem;color:var(--muted);max-width:500px;line-height:1.85;margin-bottom:3rem}
+
+/* ── ABOUT ── */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:start}
+.about-text p{font-size:.9rem;color:#3E4E6B;line-height:1.95;margin-bottom:1.2rem}
+.about-pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.8rem}
+.pill{
+  font-size:.68rem;font-weight:600;letter-spacing:.05em;
+  padding:.28rem .72rem;border-radius:40px;
+  background:var(--accent-lt);color:var(--accent);
+  border:1px solid rgba(37,99,235,0.16);
+}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-card{
+  background:var(--bg);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:1.4rem 1.5rem;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:2px 2px 0 0;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.stat-icon{font-size:1.4rem;margin-bottom:.65rem}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--ink);line-height:1}
+.stat-lbl{font-size:.7rem;color:var(--muted);margin-top:.3rem;line-height:1.45}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--bg)}
+.exp-layout{display:grid;grid-template-columns:1fr 3fr;gap:3rem;align-items:start}
+.exp-timeline{position:sticky;top:2rem}
+.exp-tl-item{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.6rem .75rem;border-radius:7px;cursor:pointer;
+  transition:all .18s;margin-bottom:.3rem;
+  border:1px solid transparent;
+}
+.exp-tl-item:hover{background:var(--accent-lt)}
+.exp-tl-item.active{background:var(--accent-lt);border-color:rgba(37,99,235,0.18)}
+.exp-tl-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .2s}
+.exp-tl-item.active .exp-tl-dot{background:var(--accent)}
+.exp-tl-label{font-size:.77rem;font-weight:600;color:var(--muted);transition:color .2s}
+.exp-tl-item.active .exp-tl-label{color:var(--accent)}
+.exp-tl-year{font-size:.63rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:auto}
+
+.exp-cards{display:flex;flex-direction:column;gap:1.4rem}
+.exp-card{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:1.8rem 2rem;
+  box-shadow:var(--shadow);
+  transition:transform .22s,box-shadow .22s,border-color .22s;
+  position:relative;overflow:hidden;
+  border-left:3px solid var(--accent);
+}
+.exp-card.older{border-left-color:var(--border2)}
+.exp-card.older:hover{border-left-color:rgba(37,99,235,0.3)}
+.exp-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.exp-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1rem}
+.exp-role{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;line-height:1.3}
+.exp-co{font-size:.8rem;color:var(--accent);font-weight:600;letter-spacing:.01em}
+.exp-period{
+  font-size:.65rem;font-family:'JetBrains Mono',monospace;
+  background:var(--accent-lt);color:var(--accent);
+  padding:.25rem .7rem;border-radius:5px;
+  white-space:nowrap;height:fit-content;font-weight:500;
+  border:1px solid rgba(37,99,235,0.16);flex-shrink:0;
+}
+.exp-card.older .exp-period{background:var(--bg3);color:var(--muted);border-color:var(--border2)}
+.exp-list{padding-left:.8rem;list-style:none}
+.exp-list li{font-size:.83rem;color:#4A5568;line-height:1.85;margin-bottom:.5rem;padding-left:.9rem;position:relative}
+.exp-list li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
+.exp-edit-btn{
+  position:absolute;bottom:.85rem;right:.85rem;
+  background:none;border:1px solid var(--border2);
+  color:var(--muted);font-size:.66rem;font-weight:600;
+  padding:.22rem .6rem;border-radius:5px;cursor:pointer;
+  transition:all .15s;display:flex;align-items:center;gap:.3rem;
+}
+.exp-edit-btn:hover{background:var(--accent-lt);color:var(--accent);border-color:rgba(37,99,235,0.25)}
+
+/* ── SKILLS ── */
+#skills{background:var(--bg3)}
+.skills-layout{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem}
+.skill-card{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;cursor:pointer;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+}
+.skill-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:rgba(37,99,235,0.2)}
+.skill-card.open{border-color:rgba(37,99,235,0.25);box-shadow:0 0 0 2px rgba(37,99,235,0.07),var(--shadow-lg)}
+.sk-header{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.4rem}
+.sk-left{display:flex;align-items:center;gap:.75rem}
+.sk-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.sk-cat{font-size:.82rem;font-weight:700;color:var(--ink);letter-spacing:.01em}
+.sk-count{font-size:.66rem;color:var(--muted);margin-top:.1rem}
+.sk-arrow{font-size:.6rem;color:var(--muted);transition:transform .22s}
+.skill-card.open .sk-arrow{transform:rotate(180deg);color:var(--accent)}
+.sk-body{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s;border-top:0px solid var(--border2)}
+.skill-card.open .sk-body{max-height:300px;border-top-width:1px}
+.sk-inner{padding:1rem 1.4rem 1.2rem}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.38rem}
+.sk-tag{
+  font-size:.7rem;font-weight:500;
+  padding:.26rem .68rem;border-radius:20px;
+  background:var(--bg);border:1px solid var(--border2);
+  color:var(--muted);transition:all .13s;
+}
+.sk-tag:hover{background:var(--accent-lt);color:var(--accent);border-color:rgba(37,99,235,0.18)}
+
+/* ── EDUCATION ── */
+#education{background:var(--bg2)}
+.edu-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem}
+.col-label{
+  font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:1.2rem;padding-bottom:.6rem;
+  border-bottom:1.5px solid var(--border2);
+}
+.edu-card{
+  background:var(--bg);border:1px solid var(--border2);
+  border-radius:9px;padding:1.1rem 1.4rem;margin-bottom:.85rem;
+  transition:transform .18s,box-shadow .18s;border-left:2px solid transparent;
+}
+.edu-card:hover{transform:translateX(3px);border-left-color:var(--accent);box-shadow:var(--shadow)}
+.edu-deg{font-size:.86rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;line-height:1.35}
+.edu-inst{font-size:.76rem;color:var(--accent);font-weight:600;margin-bottom:.15rem}
+.edu-meta{font-size:.66rem;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.cert-item{
+  display:flex;gap:.65rem;align-items:flex-start;margin-bottom:.7rem;
+  padding:.7rem .95rem;background:var(--bg);border:1px solid var(--border2);
+  border-radius:7px;transition:background .18s;
+}
+.cert-item:hover{background:var(--accent-lt)}
+.cert-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px}
+.cert-txt{font-size:.78rem;color:#4A5568;line-height:1.6}
+
+/* ── POSTS/BLOG ── */
+#posts{background:var(--bg)}
+.posts-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;
+}
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem}
+.post-card{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:1.4rem;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;
+  transition:transform .22s,box-shadow .22s;
+}
+.post-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.post-tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .62rem;border-radius:20px;margin-bottom:.9rem}
+.post-title{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.45rem;line-height:1.35}
+.post-summary{font-size:.8rem;color:var(--muted);line-height:1.8;flex:1;margin-bottom:.9rem}
+.post-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border2)}
+.post-date{font-size:.66rem;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.post-link{font-size:.72rem;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:.25rem}
+.post-link:hover{color:var(--accent3)}
+.post-actions{display:flex;gap:.45rem;align-items:center}
+.post-edit-btn,.post-del-btn{background:none;border:1px solid var(--border2);font-size:.63rem;font-weight:600;padding:.2rem .58rem;border-radius:4px;cursor:pointer;transition:all .15s}
+.post-edit-btn{color:var(--accent)}.post-edit-btn:hover{background:var(--accent-lt);border-color:rgba(37,99,235,0.25)}
+.post-del-btn{color:#DC2626}.post-del-btn:hover{background:#FEF2F2;border-color:#DC2626}
+.empty-posts{text-align:center;padding:4rem 2rem;color:var(--muted);border:2px dashed var(--border2);border-radius:var(--radius);grid-column:1/-1}
+.empty-posts p{margin-top:.5rem;font-size:.88rem}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg3)}
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:14px;padding:3rem;box-shadow:var(--shadow);
+}
+.contact-left h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:.7rem}
+.contact-left p{font-size:.86rem;color:var(--muted);line-height:1.95;margin-bottom:1.8rem}
+.ci{display:flex;gap:.75rem;align-items:center;margin-bottom:.85rem}
+.ci-icon{width:36px;height:36px;border-radius:9px;background:var(--accent-lt);display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
+.ci a{font-size:.83rem;color:var(--accent);font-weight:600}.ci a:hover{color:var(--accent3)}
+.ci span.ci-txt{font-size:.83rem;color:var(--muted)}
+#contactForm{display:flex;flex-direction:column;gap:.85rem}
+.btn-submit{background:var(--accent);color:#fff;border:none;cursor:pointer;padding:.65rem 1.6rem;border-radius:7px;font-size:.8rem;font-family:'Outfit',sans-serif;font-weight:600;transition:all .18s;align-self:flex-start;letter-spacing:.02em}
+.btn-submit:hover{background:#1D4ED8;transform:translateY(-1px)}
+.btn-submit:disabled{opacity:.6;cursor:wait}
+#formMsg{font-size:.78rem;display:none;font-weight:600}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.3);padding:2rem;text-align:center;font-size:.72rem;letter-spacing:.06em}
+footer a{color:rgba(255,255,255,.5)}.footer a:hover{color:var(--accent2)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,24,41,.5);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .22s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:2.2rem;width:min(560px,92vw);box-shadow:var(--shadow-lg);transform:translateY(20px) scale(.98);transition:transform .25s}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:1.4rem;display:flex;align-items:center;gap:.6rem}
+.field{margin-bottom:.95rem}
+.field label{display:block;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.42rem;font-weight:700}
+.field input,.field select,.field textarea{width:100%;background:var(--bg);border:1.5px solid var(--border2);color:var(--ink);padding:.58rem .88rem;font-size:.86rem;font-family:'Outfit',sans-serif;border-radius:7px;outline:none;transition:border-color .18s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field textarea{resize:vertical}
+.file-drop{border:2px dashed var(--border2);border-radius:9px;padding:1.2rem;text-align:center;cursor:pointer;transition:all .18s}
+.file-drop:hover,.file-drop.dragover{border-color:var(--accent);background:var(--accent-lt)}
+.file-drop p{font-size:.73rem;color:var(--muted);margin-top:.3rem}
+.file-drop strong{font-size:.8rem;color:var(--ink)}
+#fileNameDisplay{font-size:.73rem;color:var(--accent);margin-top:.5rem;display:none;font-weight:600}
+.modal-actions{display:flex;gap:.65rem;justify-content:flex-end;margin-top:1.2rem}
+.btn-sm{padding:.42rem 1rem;font-size:.73rem}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border2)}.btn-ghost:hover{background:var(--bg3);color:var(--ink)}
+.btn-accent{background:var(--accent);color:#fff}.btn-accent:hover{background:#1D4ED8}
+#uploadStatus{margin-top:.65rem;font-size:.78rem;display:none}
+
+.bullet-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.6rem}
+.bullet-row{display:flex;gap:.4rem;align-items:flex-start}
+.bullet-row textarea{flex:1;resize:vertical;min-height:48px;font-size:.8rem}
+.remove-bullet{background:none;border:1px solid #FCA5A5;color:#DC2626;width:28px;height:28px;border-radius:5px;cursor:pointer;font-size:.72rem;flex-shrink:0;transition:all .13s}
+.remove-bullet:hover{background:#FEF2F2}
+.add-bullet-btn{background:none;border:1px dashed var(--border2);color:var(--accent);width:100%;padding:.4rem;border-radius:6px;cursor:pointer;font-size:.73rem;font-weight:600;transition:all .13s}
+.add-bullet-btn:hover{background:var(--accent-lt);border-color:rgba(37,99,235,0.25)}
+
+.admin-bar{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(99,102,241,0.04));border:1px solid rgba(37,99,235,0.16);border-radius:var(--radius);padding:1rem 1.5rem;margin-bottom:2rem;display:none;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.admin-bar.visible{display:flex}
+.admin-key-wrap{display:flex;gap:.5rem;align-items:center}
+.admin-key-wrap input{background:var(--bg2);border:1.5px solid var(--border2);padding:.36rem .78rem;border-radius:6px;font-size:.78rem;color:var(--ink);font-family:'Outfit',sans-serif;outline:none;width:180px}
+.admin-key-wrap input:focus{border-color:var(--accent)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  :root{--sidebar-w:0px}
+  .sidebar{transform:translateX(-100%);width:260px}
+  .sidebar.mobile-open{transform:translateX(0);width:260px}
+  .main-wrap{margin-left:0}
+  .mobile-nav-btn{display:flex!important}
+  .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:4rem 1.5rem}
+  .hero-photo-wrap{display:flex;justify-content:center}
+  .hero-photo-outer,.hero-photo-frame{width:220px;height:220px}
+  .container{padding:0 1.5rem}
+  .about-grid,.edu-grid,.contact-wrap{grid-template-columns:1fr;gap:2rem}
+  .contact-wrap{padding:1.8rem}
+  .exp-layout{grid-template-columns:1fr}
+  .exp-timeline{display:none}
+}
+.mobile-nav-btn{display:none;position:fixed;bottom:1.5rem;right:1.5rem;z-index:400;width:50px;height:50px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.1rem;box-shadow:var(--shadow-lg);align-items:center;justify-content:center}
+.mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299}
+.mobile-overlay.visible{display:block}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-line-top">Portfolio</div>
+    <span class="brand-name-first">Atanu</span>
+    <span class="brand-name-last">Das</span>
+    <div class="brand-divider"></div>
+    <div class="brand-tagline">
+      <strong>Risk · Data Science · AI</strong><br>
+      Mumbai, India
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Main</div>
+    <a class="nav-item active" href="#hero" data-section="hero">
+      <span class="nav-icon">⚡</span> Overview
+    </a>
+    <a class="nav-item" href="#about" data-section="about">
+      <span class="nav-icon">👤</span> About
+    </a>
+    <a class="nav-item" href="#experience" data-section="experience">
+      <span class="nav-icon">💼</span> Experience
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Skills</div>
+    <div class="nav-item" id="skills-nav-toggle" onclick="toggleSkillsNav(this)">
+      <span class="nav-icon">🛠</span> Skills
+      <span class="nav-toggle">▶</span>
+    </div>
+    <div class="nav-sub" id="skills-nav-sub">
+      <div class="nav-sub-item" onclick="openSkillCard('credit')">🏦 Credit Risk</div>
+      <div class="nav-sub-item" onclick="openSkillCard('fraud')">🚨 Fraud Risk</div>
+      <div class="nav-sub-item" onclick="openSkillCard('ml')">🤖 Machine Learning</div>
+      <div class="nav-sub-item" onclick="openSkillCard('cloud')">☁️ Cloud & Tools</div>
+      <div class="nav-sub-item" onclick="openSkillCard('code')">💻 Programming</div>
+      <div class="nav-sub-item" onclick="openSkillCard('stats')">📊 Statistics</div>
+    </div>
+    <a class="nav-item" href="#education" data-section="education">
+      <span class="nav-icon">🎓</span> Education
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Content</div>
+    <a class="nav-item" href="#posts" data-section="posts">
+      <span class="nav-icon">✍️</span> Articles
+    </a>
+    <a class="nav-item" href="#contact" data-section="contact">
+      <span class="nav-icon">📬</span> Contact
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <div style="font-size:.6rem;color:rgba(255,255,255,0.2);letter-spacing:.14em;text-transform:uppercase">Connect</div>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/atanudas1729" target="_blank" title="LinkedIn">in</a>
+      <a href="https://medium.com/@atanu.das1729" target="_blank" title="Medium">M</a>
+      <a href="mailto:atanu.das1729@gmail.com" title="Email">✉</a>
+    </div>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileNav()"></div>
+<button class="mobile-nav-btn" onclick="toggleMobileNav()">☰</button>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-dots"></div>
+  <div class="hero-bg-shape1"></div>
+  <div class="hero-bg-shape2"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div style="animation:fadeUp .85s ease both">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="hero-eyebrow-text">Available for Consulting · Mumbai, India</span>
+      </div>
+      <h1 class="hero-headline">
+        Turning <span class="accent-word">Risk</span><br>
+        into Insight
+      </h1>
+      <div class="hero-sub-tagline">
+        <span>Where quantitative rigor meets financial intelligence.</span>
+      </div>
+      <div class="hero-role-line">
+        <strong>Consultant @ Protiviti</strong> &nbsp;·&nbsp; Credit Risk &nbsp;·&nbsp; Fraud Analytics &nbsp;·&nbsp; AI Compliance
+      </div>
+      <p class="hero-desc">
+        Helping financial institutions navigate regulatory complexity, detect fraud, and build AI-powered risk management frameworks — backed by a quantitative foundation from <strong>Indian Statistical Institute</strong>.
+      </p>
+      <div class="hero-pills">
+        <span class="hero-pill highlighted">IFRS 9</span>
+        <span class="hero-pill highlighted">Credit Scorecard</span>
+        <span class="hero-pill highlighted">Fraud Analytics</span>
+        <span class="hero-pill">GenAI / LLM</span>
+        <span class="hero-pill">AWS · GCP</span>
+        <span class="hero-pill">Python · SQL</span>
+        <span class="hero-pill">ISI Alumni</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch ↗</a>
+        <a href="https://www.linkedin.com/in/atanudas1729" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="https://medium.com/@atanu.das1729" target="_blank" class="btn btn-outline">Medium</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap" style="animation:fadeUp .85s .2s ease both">
+      <div class="hero-photo-outer">
+        <div class="hero-photo-ring1"></div>
+        <div class="hero-photo-ring2"></div>
+        <div class="hero-photo-frame" id="heroPhotoFrame">
+          <div class="hero-photo-placeholder" id="photoPlaceholder" onclick="document.getElementById('photoInput').click()">
+            <svg width="46" height="46" viewBox="0 0 52 52" fill="none">
+              <circle cx="26" cy="20" r="10" stroke="rgba(37,99,235,0.3)" stroke-width="2"/>
+              <path d="M6 44c0-11 40-11 40 0" stroke="rgba(37,99,235,0.3)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>Add Photo</span>
+          </div>
+          <img id="heroPhoto" style="display:none" src="" alt="Atanu Das"/>
+        </div>
+        <button class="photo-upload-btn" onclick="document.getElementById('photoInput').click()" title="Update photo">📷</button>
+        <div class="photo-credential">
+          <div class="photo-credential-dot"></div>
+          <span class="photo-credential-text">Consultant @ Protiviti</span>
+        </div>
+      </div>
+      <input type="file" id="photoInput" accept=".jpg,.jpeg,.png,.webp" style="display:none" onchange="uploadProfilePhoto(this)"/>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-eyebrow">Who I Am</div>
+    <div class="sec-title">Risk Consultant & Data Scientist</div>
+    <div class="sec-sub">Where quantitative rigor meets real-world financial intelligence.</div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I work as a <strong>Risk & Compliance Consultant at Protiviti</strong>, supporting clients in navigating complex regulatory environments, managing fraud risk, and building high-performing risk and control ecosystems.</p>
+        <p>With a foundation in statistics and applied mathematics from <strong>Indian Statistical Institute, Kolkata</strong>, I bring a unique quantitative perspective to risk management — leveraging machine learning, statistical modelling, and cloud platforms to solve real-world financial challenges.</p>
+        <p>My expertise spans credit risk analytics (PD, EAD, LGD, ECL), fraud risk management, IFRS 9 compliance, and model risk management — combined with deep proficiency in Python, SQL, AWS and GCP.</p>
+        <div class="about-pills">
+          <span class="pill">Credit Risk</span>
+          <span class="pill">Fraud Analytics</span>
+          <span class="pill">IFRS 9</span>
+          <span class="pill">Machine Learning</span>
+          <span class="pill">GenAI</span>
+          <span class="pill">AWS · GCP</span>
+          <span class="pill">ISI Alumni</span>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🏦</div>
+          <div class="stat-num">IFRS 9</div>
+          <div class="stat-lbl">PD · LGD · EAD · ECL end-to-end</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-num">40–60%</div>
+          <div class="stat-lbl">Effort cut with AI-powered MRM tool</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-num">ISI</div>
+          <div class="stat-lbl">Kolkata — PG Diploma, Statistics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">☁️</div>
+          <div class="stat-num">AWS+GCP</div>
+          <div class="stat-lbl">SageMaker · Bedrock · BigQuery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:3rem">
+      <div>
+        <div class="sec-eyebrow">Work History</div>
+        <div class="sec-title">Professional Experience</div>
+        <div class="sec-sub" style="margin-bottom:0">Three roles. One throughline: turning data into risk intelligence.</div>
+      </div>
+    </div>
+    <div class="exp-layout">
+      <div class="exp-timeline">
+        <div class="exp-tl-item active" onclick="scrollToExp('exp-0')">
+          <div class="exp-tl-dot"></div>
+          <div><div class="exp-tl-label">Protiviti</div></div>
+          <div class="exp-tl-year">2025</div>
+        </div>
+        <div class="exp-tl-item" onclick="scrollToExp('exp-1')">
+          <div class="exp-tl-dot"></div>
+          <div><div class="exp-tl-label">Core2Cloud</div></div>
+          <div class="exp-tl-year">2024</div>
+        </div>
+        <div class="exp-tl-item" onclick="scrollToExp('exp-2')">
+          <div class="exp-tl-dot"></div>
+          <div><div class="exp-tl-label">Roopya</div></div>
+          <div class="exp-tl-year">2023</div>
+        </div>
+      </div>
+      <div class="exp-cards" id="expCards"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-eyebrow">Expertise</div>
+    <div class="sec-title">Skills & Tools</div>
+    <div class="sec-sub">Click any card to explore the full stack.</div>
+    <div class="skills-layout" id="skillsGrid"></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="sec-eyebrow">Academic Background</div>
+    <div class="sec-title">Education</div>
+    <div class="edu-grid reveal">
+      <div>
+        <div class="col-label">Degrees & Diplomas</div>
+        <div class="edu-card"><div class="edu-deg">Post-Graduate Diploma in Statistical Methods & Analytics</div><div class="edu-inst">Indian Statistical Institute, Kolkata</div><div class="edu-meta">2022 – 2023 · First Division</div></div>
+        <div class="edu-card"><div class="edu-deg">M.Sc Applied Mathematics (Computational & Applied)</div><div class="edu-inst">West Bengal State University</div><div class="edu-meta">2019 – 2021 · CGPA 8.91 / 10</div></div>
+        <div class="edu-card"><div class="edu-deg">M.Tech in Data Science</div><div class="edu-inst">MAKAUT, West Bengal</div><div class="edu-meta">2021 – 2022</div></div>
+        <div class="edu-card"><div class="edu-deg">B.Sc in Mathematics</div><div class="edu-inst">Rahara RKM Vivekananda Centenary College</div><div class="edu-meta">2016 – 2019</div></div>
+      </div>
+      <div>
+        <div class="col-label">Certifications</div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Second Winter School on Deep Learning (WSDL) — ISI Kolkata, 2023</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Developing Credit Risk Scorecard using SAS — 2023</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Credit Risk Modeling in Python — 2023</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">BOOTCAMP – Credit Risk Modeling, Peaks2Tails Industrial Training</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Credit Risk Scorecard — Automating Credit Decision, K2 Analytics</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Quantitative Finance & Algorithmic Trading in Python — 2025</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">McKinsey.org Forward Program — 2025</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">Complete Generative AI Course with LangChain & HuggingFace — 2025</div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div class="cert-txt">AWS Cloud Practitioner Essentials — 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section id="posts">
+  <div class="container">
+    <div id="adminBar" class="admin-bar">
+      <span style="font-size:.78rem;font-weight:700;color:var(--accent)">⚙️ Admin Panel</span>
+      <div class="admin-key-wrap">
+        <input type="password" id="adminKeyInput" placeholder="Admin key…"/>
+        <button class="btn btn-accent btn-sm" onclick="saveAdminKey()">Save</button>
+      </div>
+    </div>
+    <div class="posts-toolbar">
+      <div>
+        <div class="sec-eyebrow">Writing</div>
+        <div class="sec-title">Articles & Research</div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('post')">+ Add Article</button>
+    </div>
+    <div class="posts-grid" id="postsGrid">
+      <div class="empty-posts"><span style="font-size:2rem">📝</span><p>Loading articles…</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-eyebrow">Get in Touch</div>
+    <div class="sec-title">Let's Connect</div>
+    <div class="contact-wrap reveal">
+      <div class="contact-left">
+        <h3>Say Hello</h3>
+        <p>Open to collaborations, consulting opportunities, and conversations about risk, data science, or quantitative finance.</p>
+        <div class="ci"><div class="ci-icon">✉️</div><a href="mailto:atanu.das1729@gmail.com">atanu.das1729@gmail.com</a></div>
+        <div class="ci"><div class="ci-icon">📱</div><span class="ci-txt">+91 9775591457</span></div>
+        <div class="ci"><div class="ci-icon">💼</div><a href="https://www.linkedin.com/in/atanudas1729" target="_blank">linkedin.com/in/atanudas1729</a></div>
+        <div class="ci"><div class="ci-icon">✍️</div><a href="https://medium.com/@atanu.das1729" target="_blank">medium.com/@atanu.das1729</a></div>
+        <div class="ci"><div class="ci-icon">📍</div><span class="ci-txt">Mumbai, India</span></div>
+      </div>
+      <form id="contactForm">
+        <div class="field"><label>Name</label><input type="text" id="f-name" placeholder="Your full name" required/></div>
+        <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="your@email.com" required/></div>
+        <div class="field"><label>Subject</label><input type="text" id="f-subject" placeholder="What's this about?" required/></div>
+        <div class="field"><label>Message</label><textarea id="f-message" rows="4" placeholder="Your message…" required></textarea></div>
+        <button type="submit" class="btn-submit" id="submitBtn">Send Message →</button>
+        <div id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Atanu Das &nbsp;·&nbsp; Turning Risk into Insight &nbsp;·&nbsp; Mumbai, India &nbsp;·&nbsp;
+     <a href="https://www.linkedin.com/in/atanudas1729" target="_blank">LinkedIn</a> &nbsp;·&nbsp;
+     <a href="https://medium.com/@atanu.das1729" target="_blank">Medium</a>
+  </p>
+</footer>
+
+<!-- POST MODAL -->
+<div class="modal-overlay" id="postModal" onclick="closeModalOutside(event,'postModal')">
+  <div class="modal">
+    <div class="modal-title">✍️ <span id="postModalTitle">Publish Article</span></div>
+    <input type="hidden" id="editPostId"/>
+    <div class="field"><label>Title *</label><input type="text" id="p-title" placeholder="Article title…"/></div>
+    <div class="field">
+      <label>Category</label>
+      <select id="p-tag">
+        <option>Credit Risk</option><option>Fraud Risk</option>
+        <option>Machine Learning</option><option>IFRS 9</option>
+        <option>Tutorial</option><option>Research</option>
+        <option>GenAI</option><option>Career</option>
+      </select>
+    </div>
+    <div class="field"><label>Summary *</label><textarea id="p-summary" rows="3" placeholder="Brief description…"></textarea></div>
+    <div class="field">
+      <label>Attach PDF or Image (optional, max 10 MB)</label>
+      <div class="file-drop" id="fileDrop" onclick="document.getElementById('p-file').click()"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDrop(event)">
+        <strong>Click to browse</strong> or drag & drop
+        <p>PDF, PNG, JPG, WEBP — max 10 MB</p>
+      </div>
+      <input type="file" id="p-file" accept=".pdf,.png,.jpg,.jpeg,.webp" style="display:none" onchange="showFileName(this)"/>
+      <div id="fileNameDisplay"></div>
+    </div>
+    <div id="uploadStatus"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('postModal')">Cancel</button>
+      <button class="btn btn-accent btn-sm" onclick="submitPost()">Publish</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE EDIT MODAL -->
+<div class="modal-overlay" id="expModal" onclick="closeModalOutside(event,'expModal')">
+  <div class="modal">
+    <div class="modal-title">✏️ Edit Experience</div>
+    <input type="hidden" id="editExpIdx"/>
+    <div class="field"><label>Role *</label><input type="text" id="e-role" placeholder="Job title…"/></div>
+    <div class="field"><label>Company *</label><input type="text" id="e-company" placeholder="Company name…"/></div>
+    <div class="field"><label>Period</label><input type="text" id="e-period" placeholder="e.g. Aug 2025 – Present"/></div>
+    <div class="field">
+      <label>Highlights</label>
+      <div class="bullet-list" id="bulletList"></div>
+      <button class="add-bullet-btn" onclick="addBullet('')">+ Add bullet point</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('expModal')">Cancel</button>
+      <button class="btn btn-accent btn-sm" onclick="saveExp()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let expData = [
+  {
+    id:'exp-0',role:'Consultant – Risk & Compliance',company:'Protiviti India Member Firm · Mumbai',
+    period:'Aug 2025 – Present',current:true,
+    highlights:[
+      'IFRS 9 end-to-end: PIT PD estimation, Z-score modelling, macroeconomic regression, Lifetime ECL across multiple economic scenarios.',
+      'Model validation using AUC-ROC, Gini, KS Statistics, WoE, IV, PSI and CSI stability measures.',
+      'Built AI-powered MRM Findings Library using NLP & GenAI — reduced manual effort by 40–60%.',
+      'Kotak Mahindra Bank: mule account linkage analysis across NEFT, RTGS, IMPS, UPI and Payment Gateway.',
+      'Fraud monitoring via Falcon (Credit Card) and Clari 5 alerts across CC, DC, Net Banking, Mobile Banking and UPI.',
+      'Branch-level & PIN-code hotspot fraud analysis for Kotak 811 / Non-811 accounts — Q1–Q3 FY26.',
+    ]
+  },
+  {
+    id:'exp-1',role:'BI Developer Associate',company:'Workmates Core2Cloud Solution Ltd · Kolkata',
+    period:'Sep 2024 – May 2025',current:false,
+    highlights:[
+      'Scalable AI/ML solutions on AWS: SageMaker, Textract, Rekognition, Lex, Translate and Bedrock.',
+      'ML-based resume screening system improving shortlisting efficiency across multiple job roles.',
+      'Advanced OCR pipelines for Aadhaar, PAN, salary slips and bank statements (EasyOCR + Tesseract + OpenCV).',
+      'Interactive dashboards on AWS QuickSight for business intelligence.',
+    ]
+  },
+  {
+    id:'exp-2',role:'Data Scientist – Credit Risk',company:'Roopya (Geoalgo Technologies Pvt. Ltd.) · Kolkata',
+    period:'Jul 2023 – Sep 2024',current:false,
+    highlights:[
+      'Built PD models and credit scorecards leveraging payment behaviour and macroeconomic factors.',
+      'Designed and deployed real-time APIs for PD and scorecard outputs.',
+      'Coverage: PD, LGD, EAD, ECL under IFRS 9; TTC PD, RAROC and Stress Testing.',
+      'Cross-sell analytics and data segmentation for loan portfolio clients.',
+    ]
+  }
+];
+
+const skillsData = [
+  {id:'credit',icon:'🏦',bg:'#EEF6F1',cat:'Credit Risk',tags:['PD Modelling','LGD','EAD','ECL','IFRS 9','Scorecards','RAROC','Stress Testing']},
+  {id:'fraud',icon:'🚨',bg:'#FEF0EF',cat:'Fraud Risk',tags:['Mule Account Detection','Transaction Monitoring','Fraud Analytics','Falcon','Clari 5']},
+  {id:'ml',icon:'🤖',bg:'#EBF2FF',cat:'Machine Learning',tags:['Logistic Regression','Random Forest','XGBoost','PCA','LDA','Clustering','NLP','LLM / GenAI']},
+  {id:'cloud',icon:'☁️',bg:'#F3F0FB',cat:'Cloud & Tools',tags:['AWS SageMaker','AWS Bedrock','GCP BigQuery','Vertex AI','Power BI','Superset','QuickSight']},
+  {id:'code',icon:'💻',bg:'#EEF6F1',cat:'Programming',tags:['Python','SQL','NumPy','Pandas','Scikit-learn','Streamlit','Seaborn','Matplotlib']},
+  {id:'stats',icon:'📊',bg:'#FFFAEE',cat:'Statistics',tags:['Probability Distributions','Hypothesis Testing','Inferential Statistics','Time Series']},
+];
+
+const TAG_COLORS = {
+  'Credit Risk':['#FBF6E8','#92700F'],'Fraud Risk':['#FEF0EF','#B91C1C'],
+  'Machine Learning':['#EBF2FF','#2563EB'],'IFRS 9':['#FBF6E8','#92700F'],
+  'Tutorial':['#EEF6F1','#065F46'],'Research':['#F3F0FB','#4C1D95'],
+  'GenAI':['#EEF6F1','#065F46'],'Career':['#F0F4FF','#2563EB'],
+};
+function tagStyle(tag){const[bg,col]=TAG_COLORS[tag]||['#EBF2FF','#2563EB'];return`background:${bg};color:${col}`;}
+
+function renderExp(){
+  const grid=document.getElementById('expCards');
+  grid.innerHTML=expData.map((e,i)=>`
+    <div class="exp-card reveal ${e.current?'':'older'}" id="${e.id}">
+      <div class="exp-card-head">
+        <div>
+          <div class="exp-role">${e.role}</div>
+          <div class="exp-co">${e.company}</div>
+        </div>
+        <div class="exp-period">${e.period}</div>
+      </div>
+      <ul class="exp-list">
+        ${e.highlights.map(h=>`<li>${h}</li>`).join('')}
+      </ul>
+      <button class="exp-edit-btn" onclick="openExpEdit(${i})">✏️ Edit</button>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+}
+
+function renderSkills(){
+  const grid=document.getElementById('skillsGrid');
+  grid.innerHTML=skillsData.map(s=>`
+    <div class="skill-card reveal" id="skill-${s.id}" onclick="toggleSkill('${s.id}')">
+      <div class="sk-header">
+        <div class="sk-left">
+          <div class="sk-icon" style="background:${s.bg}">${s.icon}</div>
+          <div>
+            <div class="sk-cat">${s.cat}</div>
+            <div class="sk-count">${s.tags.length} skills</div>
+          </div>
+        </div>
+        <div class="sk-arrow">▼</div>
+      </div>
+      <div class="sk-body">
+        <div class="sk-inner">
+          <div class="sk-tags">${s.tags.map(t=>`<span class="sk-tag">${t}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+}
+
+function toggleSkill(id){document.getElementById('skill-'+id).classList.toggle('open')}
+function openSkillCard(id){
+  document.getElementById('skills').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    skillsData.forEach(s=>{const c=document.getElementById('skill-'+s.id);if(c)c.classList.remove('open')});
+    const t=document.getElementById('skill-'+id);
+    if(t){t.classList.add('open');setTimeout(()=>t.scrollIntoView({behavior:'smooth',block:'nearest'}),200)}
+  },400);
+  closeMobileNav();
+}
+
+function toggleSkillsNav(el){
+  el.classList.toggle('open');
+  document.getElementById('skills-nav-sub').classList.toggle('open');
+}
+
+function openExpEdit(idx){
+  const e=expData[idx];
+  document.getElementById('editExpIdx').value=idx;
+  document.getElementById('e-role').value=e.role;
+  document.getElementById('e-company').value=e.company;
+  document.getElementById('e-period').value=e.period;
+  const bl=document.getElementById('bulletList');bl.innerHTML='';
+  e.highlights.forEach(h=>addBullet(h));
+  document.getElementById('expModal').classList.add('open');
+}
+
+function addBullet(text){
+  const bl=document.getElementById('bulletList');
+  const row=document.createElement('div');row.className='bullet-row';
+  row.innerHTML=`<textarea class="field input" style="flex:1;resize:vertical;min-height:52px;font-size:.8rem;border:1.5px solid var(--border2);border-radius:6px;padding:.5rem .7rem;font-family:'Outfit',sans-serif;outline:none;background:var(--bg);color:var(--ink)" placeholder="Bullet point…">${text}</textarea>
+    <button class="remove-bullet" onclick="this.parentElement.remove()">✕</button>`;
+  bl.appendChild(row);
+}
+
+function saveExp(){
+  const idx=parseInt(document.getElementById('editExpIdx').value);
+  const bullets=[...document.querySelectorAll('#bulletList textarea')].map(t=>t.value.trim()).filter(Boolean);
+  expData[idx]={...expData[idx],role:document.getElementById('e-role').value.trim(),company:document.getElementById('e-company').value.trim(),period:document.getElementById('e-period').value.trim(),highlights:bullets};
+  closeModal('expModal');renderExp();
+}
+
+function scrollToExp(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'center'});
+  document.querySelectorAll('.exp-tl-item').forEach(el=>{el.classList.toggle('active',el.getAttribute('onclick').includes(id))});
+}
+
+let adminKey=localStorage.getItem('adminKey')||'';
+if(new URLSearchParams(location.search).get('admin')==='1')document.getElementById('adminBar').classList.add('visible');
+function saveAdminKey(){adminKey=document.getElementById('adminKeyInput').value;localStorage.setItem('adminKey',adminKey);alert('Admin key saved.')}
+
+async function loadPosts(){
+  const grid=document.getElementById('postsGrid');
+  try{
+    const posts=await fetch('/api/posts').then(r=>r.json());
+    if(!posts.length){grid.innerHTML=`<div class="empty-posts"><span style="font-size:2rem">📝</span><p>No articles yet. Click <strong>"+ Add Article"</strong> to publish your first post.</p></div>`;return}
+    grid.innerHTML=posts.map(p=>`
+      <div class="post-card reveal">
+        <span class="post-tag" style="${tagStyle(p.tag)}">${p.tag}</span>
+        <div class="post-title">${p.title}</div>
+        <div class="post-summary">${p.summary}</div>
+        <div class="post-footer">
+          <span class="post-date">${p.date}</span>
+          <div class="post-actions">
+            ${p.file_url?`<a class="post-link" href="${p.file_url}" target="_blank">${p.file_type==='pdf'?'📄 PDF':'🖼 View'} ↗</a>`:''}
+            <button class="post-edit-btn" onclick="openEditPost('${p.id}','${escStr(p.title)}','${escStr(p.summary)}','${p.tag}')">✏️</button>
+            ${adminKey?`<button class="post-del-btn" onclick="deletePost('${p.id}')">🗑</button>`:''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+    grid.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+  }catch(e){grid.innerHTML='<div class="empty-posts"><p>Could not load posts.</p></div>'}
+}
+loadPosts();
+
+function escStr(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}
+async function deletePost(id){if(!confirm('Delete this post?'))return;await fetch(`/api/posts/${id}`,{method:'DELETE',headers:{'X-Admin-Key':adminKey}});loadPosts()}
+function openEditPost(id,title,summary,tag){document.getElementById('postModalTitle').textContent='Edit Article';document.getElementById('editPostId').value=id;document.getElementById('p-title').value=decodeHTMLEntities(title);document.getElementById('p-summary').value=decodeHTMLEntities(summary);document.getElementById('p-tag').value=tag;document.getElementById('postModal').classList.add('open')}
+function decodeHTMLEntities(s){const t=document.createElement('textarea');t.innerHTML=s;return t.value}
+function openModal(type){if(type==='post'){document.getElementById('postModalTitle').textContent='Publish Article';document.getElementById('editPostId').value='';document.getElementById('p-title').value='';document.getElementById('p-summary').value='';document.getElementById('postModal').classList.add('open')}}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function closeModalOutside(e,id){if(e.target===document.getElementById(id))closeModal(id)}
+function showFileName(input){const d=document.getElementById('fileNameDisplay');d.style.display=input.files[0]?'block':'none';d.textContent=input.files[0]?'📎 '+input.files[0].name:''}
+function handleDrop(e){e.preventDefault();document.getElementById('fileDrop').classList.remove('dragover');const f=e.dataTransfer.files[0];if(f){document.getElementById('p-file').files=e.dataTransfer.files;showFileName(document.getElementById('p-file'))}}
+
+async function submitPost(){
+  const title=document.getElementById('p-title').value.trim();
+  const summary=document.getElementById('p-summary').value.trim();
+  const tag=document.getElementById('p-tag').value;
+  const file=document.getElementById('p-file').files[0];
+  const editId=document.getElementById('editPostId').value;
+  const status=document.getElementById('uploadStatus');
+  if(!title||!summary){status.style.cssText='display:block;color:#DC2626';status.textContent='Title and summary are required.';return}
+  status.style.cssText='display:block;color:var(--muted)';status.textContent='Publishing…';
+  if(editId)await fetch(`/api/posts/${editId}`,{method:'DELETE',headers:adminKey?{'X-Admin-Key':adminKey}:{}});
+  const fd=new FormData();fd.append('title',title);fd.append('summary',summary);fd.append('tag',tag);if(file)fd.append('file',file);
+  try{
+    const res=await fetch('/api/posts',{method:'POST',headers:adminKey?{'X-Admin-Key':adminKey}:{},body:fd});
+    const data=await res.json();
+    if(data.success){
+      status.style.color='var(--accent)';status.textContent='Published! ✓';
+      setTimeout(()=>{closeModal('postModal');document.getElementById('p-title').value='';document.getElementById('p-summary').value='';document.getElementById('p-file').value='';document.getElementById('fileNameDisplay').style.display='none';status.style.display='none';loadPosts()},800);
+    }else{status.style.color='#DC2626';status.textContent=data.message||'Error.'}
+  }catch{status.style.color='#DC2626';status.textContent='Upload failed. Please try again.'}
+}
+
+document.getElementById('contactForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn'),msg=document.getElementById('formMsg');
+  btn.disabled=true;btn.textContent='Sending…';
+  try{
+    const res=await fetch('/contact',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:document.getElementById('f-name').value,email:document.getElementById('f-email').value,
+        subject:document.getElementById('f-subject').value,message:document.getElementById('f-message').value})});
+    const data=await res.json();
+    msg.style.cssText=`display:block;color:${data.success?'var(--accent)':'#DC2626'}`;
+    msg.textContent=data.message;
+    if(data.success)this.reset();
+  }catch{msg.style.cssText='display:block;color:#DC2626';msg.textContent='Something went wrong.'}
+  btn.disabled=false;btn.textContent='Send Message →';
+});
+
+async function uploadProfilePhoto(input){
+  if(!input.files[0])return;
+  const fd=new FormData();fd.append('photo',input.files[0]);
+  try{
+    const res=await fetch('/api/profile-photo',{method:'POST',body:fd});
+    const data=await res.json();
+    if(data.success){document.getElementById('heroPhoto').src=data.url;document.getElementById('heroPhoto').style.display='block';document.getElementById('photoPlaceholder').style.display='none';}
+    else alert('Upload failed: '+data.message);
+  }catch{alert('Photo upload failed.')}
+}
+async function loadProfilePhoto(){
+  try{
+    const res=await fetch('/api/profile-photo'),data=await res.json();
+    if(data.url){document.getElementById('heroPhoto').src=data.url;document.getElementById('heroPhoto').style.display='block';document.getElementById('photoPlaceholder').style.display='none'}
+  }catch{}
+}
+loadProfilePhoto();
+
+const observer=new IntersectionObserver(
+  entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),
+  {threshold:0.07}
+);
+document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+
+const secs=['hero','about','experience','skills','education','posts','contact'];
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  secs.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-200)cur=id;});
+  document.querySelectorAll('.nav-item[data-section]').forEach(a=>{a.classList.toggle('active',a.dataset.section===cur)});
+});
+
+function toggleMobileNav(){document.getElementById('sidebar').classList.toggle('mobile-open');document.getElementById('mobileOverlay').classList.toggle('visible')}
+function closeMobileNav(){document.getElementById('sidebar').classList.remove('mobile-open');document.getElementById('mobileOverlay').classList.remove('visible')}
+document.querySelectorAll('.nav-item[href]').forEach(el=>{el.addEventListener('click',()=>{if(window.innerWidth<=900)closeMobileNav()})});
+
+renderExp();
+renderSkills();
+</script>
+</body>
+</html>
